@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import App from './components/app'
+//import {App} from './components/app'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App /> {/*Forma de comentar em DOM*/}
   </React.StrictMode>,
   document.getElementById('root')
 );
