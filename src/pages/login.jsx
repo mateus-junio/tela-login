@@ -3,29 +3,34 @@ import { Botao } from '../components/ui/botao'
 import { useState } from 'react'
 
 const Login = () => {
-    let variavel = "meu nome é Marcos"
+    const [valores, setValores] = useState({})
 
-    const [param_1, param_2] = useState('VALOR_INICIAL')
-    //param 1 valor da minha variavel
-    //param 2 funcao
+    //console.log('VALORES: ', valores)
 
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
+    function handleSave() {
+        if (valores.email && valores.password) {
+            localStorage.setItem('USER', JSON.stringify(valores))
+            window.location.reload()
+        } else {
+            alert('Preencher o campo Email e Senha')
+        }
+    }
 
-    console.log('EMAIL: ', email)
-    console.log('SENHA: ', senha)
+    return (
+        <div className="container">
+            <div className='row'>
+                <div className='col-12 col-md-4 offset-md-4'>
 
-    return (        
-            <div className="container">
+                    <h1>Login</h1>
 
-                <h1>Login</h1>
-
-                <div className="form">
-                    <Input setValue={setEmail} label="E-mail" type="text" id="email" name="email" placeholder="Seu email" />
-                    <Input setValue={setSenha} label="senha" type="password" id="password" name="password" placeholder="Sua senha" />
-                    <Botao>ACESSAR</Botao>
+                    <div className="form">
+                        <Input setValue={setValores} value={valores.email} label="E-mail" type="text" id="email" name="email" placeholder="Seu email" />
+                        <Input setValue={setValores} value={valores.senha} label="senha" type="password" id="password" name="password" placeholder="Sua senha" />
+                        <Botao handleClick={handleSave}>Acessar</Botao>
+                    </div>
                 </div>
-            </div>        
+            </div>
+        </div>
     )
 }
 

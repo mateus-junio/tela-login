@@ -1,6 +1,7 @@
-import { Component } from "react/cjs/react.development";
-import '../assets/styles.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+//import '../assets/styles.css'
 import Login from '../pages/login'
+import Pokedex from '../pages/pokedex'
 
 // function App () {
 // }
@@ -8,12 +9,27 @@ import Login from '../pages/login'
 // }
 
 const App = () => {
-    return (
-        <>
-        <Login />
-        </>
-    )
+    const esta_logado = JSON.parse(localStorage.getItem('USER'))
+
+    if (esta_logado) {
+        return (
+            <Pokedex />
+        )
+    }
+    return <Login />
 }
 
 export default App
+// console.log(esta_logado)
+
+// //JSON.stringfy() // transforma o objeto em string
+// // JSON.parse() // transforma a string em um objeto
+//     return (
+//         <>
+//         <Login />
+//         </>
+//     )
+
+
+
 
