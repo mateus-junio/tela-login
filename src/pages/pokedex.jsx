@@ -1,37 +1,29 @@
+import {Card} from "../components/ui/card"
+
 export default function Pokedex() {
     const pokemon = {
         name: 'Ditto',
-        image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/132.png' //colar url 
-
-
+        image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/132.png',
+        order: 203 
     }
+    //chamar a API de pokémon
 
     const pokemons = [
+        {
+            name: 'Mewtwo',
+            image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/150_f2.png'
+        },
         pokemon,
         pokemon,
-        pokemon
+        pokemon,
     ]
-
-
     return (
         <div className="container">
-            <h1>POKÉMONS</h1>
-
-            <div className="row">
+            <h1>Pokémons</h1>
+            <div id="cards" className="row">
                 {pokemons.map((poke, indice) => (
-                    <div key={indice} className="col-12 col-sm-6 col-md-4">
-                        <div className="card">
-                            <img
-                                className="bg-success" //rounded bg-primary
-                                src={poke.image}
-                                alt={poke.name}
-                                title={poke.name}
-                            />
-                            <h2 className="text-center">{poke.name}</h2>
-                        </div>
-                    </div>
+                    <Card key={indice} name={poke.name} image={poke.image}/>
                 ))}
-
             </div>
         </div>
     )
