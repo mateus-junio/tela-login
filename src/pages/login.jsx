@@ -1,12 +1,10 @@
 import { Input } from '../components/ui/input'
 import { Botao } from '../components/ui/botao'
 import { useState } from 'react'
-//import { Card } from '../components/ui/card'
+
 
 const Login = () => {
     const [valores, setValores] = useState({})
-
-    //console.log('VALORES: ', valores)
 
     function handleSave() {
         if (valores.email && valores.password) {

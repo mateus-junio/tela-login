@@ -1,12 +1,22 @@
-export const Botao = ({children, handleClick}) => {
-    //props.children     
+const ButtonInner = (props) => {
+    const { children, className, handleClick } = props
+  
     return (
-        <div className="form-group">
-            <button 
-            className="btn btn-primary mt-3" // .btn-custom criar classe no css
-            onClick={handleClick}
-            >{children}
-            </button>
-        </div>
+      <button
+        className={`btn btn-primary mt-3 ${className}`}
+        onClick={handleClick}
+      >{children}</button>
     )
-}
+  }
+  
+  export const Botao = (props) => {
+    if (props.noGroup) {
+      return <ButtonInner {...props} />
+    }
+  
+    return (
+      <div className="form-group">
+        <ButtonInner {...props} />
+      </div>
+    )
+  }

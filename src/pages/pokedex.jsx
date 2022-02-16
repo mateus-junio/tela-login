@@ -1,43 +1,63 @@
-import { getImagePokemon } from "../utils/helpers"
-import { useEffect, useState } from "react"
-import { Card } from "../components/ui/card"
-const API_URL = 'https://pokeapi.co/api/v2'
-const BASE_IMAGE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/:ID_IMAGE:.png'
+import { useEffect, useState } from 'react'
+import { Card } from '../components/ui/card'
+import { getImagePokemon } from '../utils/helpers'
+import { Botao } from '../components/ui/botao'
 
-//async await
-/* .then() // resultado OK
-   .catch() // resultado ERROR */
-/*fetch('https://pokeapi.co/api/v2/pokemon?limit=12&offset=1')
-     .then() // resultado OK
-     .catch() // resultado ERROR */
-export default function Pokedex() {
-    const [pokemons, setPokemons] = useState([]) //array de pokémons
+const URL_INICIAL = 'https://pokeapi.co/api/v2/pokemon?limit=12&offset=0'
 
-    useEffect(() => {
-        async function chamarPokemons() {
-            try {
-                const promise = await fetch(API_URL + '/pokemon?limit=12&offset=0')
-                const resultado = await promise.json()
+export default function Pokedex () {
+  const [dados, setDados] = useState(null)
+  const [paginaAtual, setPaginaAtual] = useState(URL_INICIAL)
+  
+  useEffect(() => {
+    async function chamarPokemons() {
+      try {
+        const promise = await fetch(paginaAtual)
+        const resultado = await promise.json()
 
-                setPokemons(resultado.results)
-            } catch (error) {
-                console.log('deu erro')
-            }
-        } chamarPokemons()
-    }, [])
-    //Sempre que usar o useEffect usar o array [] mesmo vazio, caso contrário entram em loop. 
-    return (
-        <div className="container">
-            <h1>Pokémons</h1>
+        setDados(resultado)
+      } catch (error) {
+        console.log('deu erro')
+      }
+    }
+    chamarPokemons()
+  }, [paginaAtual])
 
-            <div id="cards" className="row">
-                {pokemons.map((poke, indice) => (
-                    <Card
-                        key={indice}
-                        {...poke}
-                        image={getImagePokemon(poke.url)} />
-                ))}
-            </div>
-        </div>
-    )
+  if (dados == null) {
+    return <p>Carregando os meus pokemon</p>
+  }
+
+  return (
+    <div className="container">
+      <h1 className='text-center'>Pokémon</h1>
+
+      <div className="row">
+        {dados?.results?.map((poke, index) => (
+          <Card
+            key={index}
+            {...poke}
+            image={getImagePokemon(poke.url)}
+          />
+        ))}
+      </div>
+
+      <div className="mb-5">
+        {dados.previous && (
+          <Botao
+            noGroup
+            className="me-3"
+            handleClick={() => setPaginaAtual(dados.previous)}
+          >VOLTAR</Botao>
+        )}
+
+        {dados.next && (
+          <Botao
+            noGroup={true}
+            handleClick={() => setPaginaAtual(dados.next)}
+          >AVANÇAR</Botao>
+        )}
+      </div>
+
+    </div>
+  )
 }
